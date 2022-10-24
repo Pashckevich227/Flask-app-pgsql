@@ -112,7 +112,7 @@ Session = sessionmaker(bind=engine)
 #     book.price = '6,00'
 #     s.add(book)
 
-with session_scope() as s:
-    print(*s.query(Book).order_by(Book.id.asc()).all(), sep='\n')
+# with session_scope() as s:
+#     print(*s.query(Book).order_by(Book.id.asc()).all(), sep='\n')
 
 # s.close_all()

@@ -15,4 +15,13 @@ class Book(Base):
     price = Column(MONEY)
 
     def __repr__(self):
-        return f"Book(id={self.id}, title={self.title}, author={self.author}, pages={self.pages}, published={self.published}, price={self.price})"
+        return {
+                f"id: {self.id}",
+                f"title: {self.title}",
+                f"author: {self.author}",
+                f"pages: {self.pages}",
+                f"published: {self.published}",
+                f"price: {self.price}"
+            }
+
+
