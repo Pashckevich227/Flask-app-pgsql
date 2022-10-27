@@ -31,7 +31,23 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)  # 404 - Not found
 
 
+# POST METHODS
+@app.route('/', methods=['POST'])
+def add_book():
+    s = Session()
+    books = list(el.json() for el in s.query(Book).all())
 
+    if not request.json or not 'title' in request.json:
+        abort(404)
+    book = Book(id=books[-1]['id'] + 1,
+                title=request.json['title'],
+                author=request.json['author'],
+                pages=request.json['pages'],
+                published=request.json['published'],
+                price=request.json['price'])
+    s.add(book)
+    s.commit()
+    return {'book': book.json()}, 201  # 201 - CREATED
 
 
 if __name__ == '__main__':
