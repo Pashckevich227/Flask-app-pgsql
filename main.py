@@ -50,5 +50,33 @@ def add_book():
     return {'book': book.json()}, 201  # 201 - CREATED
 
 
+# PUT METHODS
+# @app.route('/<int:book_id>', methods=['PUT'])
+# def update_task(book_id):
+#     s = Session()
+#     book = list(el.json() for el in s.query(Book).all())
+#     book = list(filter(lambda x: x['id'] == book_id, book))
+#
+#     if not request.json and len(book) == 0:
+#         abort(400)
+#
+#     book[0]['title'] = request.json.get('title', book[0]['title'])
+#     book[0]['price'] = request.json.get('price', book[0]['price'])
+#     book[0]['kill_reward'] = request.json.get('kill_reward', book[0]['kill_reward'])
+#     return jsonify({'task': book[0]})
+
+
+@app.route('/<int:book_id>', methods=['DELETE'])
+def delete_task(book_id):
+    s = Session()
+    data = s.query(Book).all()
+    book = s.query(Book).filter(Book.id == book_id).first()
+    if book not in data:
+        abort(404)
+    s.delete(book)
+    s.commit()
+    return ({'result': True})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
